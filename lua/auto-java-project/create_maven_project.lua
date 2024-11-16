@@ -55,7 +55,7 @@ local function mvn_new_project()
   if canceled_archetype then
     return
   end
-  local archetype_version, canceled_version = get_user_input("Enter archetypeVersion: ", "1.4")
+  local archetype_version, canceled_version = get_user_input("Enter archetypeVersion: ", "1.5")
   if canceled_version then
     return
   end
