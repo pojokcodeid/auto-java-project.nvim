@@ -8,13 +8,11 @@
 
 ```lua
 {
-"auto-java-project.nvim",
-event="VeryLazy",
-opts = {},
--- stylua: ignore
-config = function(_, opts)
-  require("auto-java-project").setup()
-end,
+  "auto-java-project.nvim",
+  event="VeryLazy",
+  config = function()
+    require("auto-java-project").setup()
+  end,
 },
 ```
 
