@@ -21,6 +21,18 @@ local function mvn_new_project()
 
     return result, false
   end
+  -- validasi maven command
+  -- Fungsi untuk memeriksa apakah perintah maven tersedia
+  local function is_maven_available()
+    local handle = io.popen("mvn -v")
+    local result = handle:read("*a")
+    handle:close()
+    return result ~= ""
+  end
+  if not is_maven_available() then
+    create_notif("Maven is not available. Please install Maven and try again.", "error")
+    return
+  end
   -- Ambil input dari pengguna untuk menentukan direktori proyek
   local project_dir, canceled = get_user_input("Enter project directory: ", vim.fn.getcwd())
   if canceled then
