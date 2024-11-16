@@ -21,3 +21,4 @@ end,
 User Command :
 
 - :MavenNewProject
+- :SpringBootNewProject
