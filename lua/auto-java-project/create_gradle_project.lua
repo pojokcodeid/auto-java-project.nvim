@@ -23,6 +23,19 @@ local function gradle_new_project()
     return result, false
   end
 
+  -- Fungsi untuk memeriksa apakah perintah gradle tersedia
+  local function is_gradle_available()
+    local handle = io.popen("gradle -v")
+    local result = handle:read("*a")
+    handle:close()
+    return result ~= ""
+  end
+
+  -- Validasi apakah gradle tersedia
+  if not is_gradle_available() then
+    create_notif("Gradle is not available. Please install Gradle and try again.", "error")
+    return
+  end
   -- Ambil input dari pengguna untuk menentukan direktori proyek
   local project_dir, canceled = get_user_input("Enter project directory: ", vim.fn.getcwd())
   if canceled then
