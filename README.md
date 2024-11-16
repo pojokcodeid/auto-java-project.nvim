@@ -18,5 +18,7 @@
 
 User Command :
 
+```lua
 - :MavenNewProject
 - :SpringBootNewProject
+```
