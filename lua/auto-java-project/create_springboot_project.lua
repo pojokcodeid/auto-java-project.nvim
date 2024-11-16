@@ -255,7 +255,6 @@ local function springboot_new_project()
     local ch_dir = string.format("cd %s", project_dir .. "/" .. name)
     vim.fn.system(ch_dir)
     vim.fn.chdir(project_dir .. "/" .. name)
-    create_notif(name, "info")
     -- Cari dan buka file main class
     local uname = vim.loop.os_uname().sysname
     local pth = package_name
@@ -265,7 +264,6 @@ local function springboot_new_project()
         create_notif(pth, "info")
         local main_class_path =
           string.format("src\\main\\java\\%s\\" .. capitalize_first_letter(name) .. "Application.java", pth)
-        create_notif(main_class_path, "info")
         if vim.fn.filereadable(main_class_path) == 1 then
           vim.cmd(":edit " .. main_class_path)
         end
