@@ -1,3 +1,7 @@
+# Preview
+
+![config!](img.png)
+
 # auto-jdtls.nvim
 
 - auto-java-project.nvim is an plugin for automatically creating a Java project
@@ -20,5 +24,6 @@ User Command :
 
 ```lua
 - :MavenNewProject
+- :GradleNewProject
 - :SpringBootNewProject
 ```
