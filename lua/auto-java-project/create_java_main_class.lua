@@ -87,9 +87,7 @@ local function create_java_main_class()
 package %s;
 
 public class %s {
-    /**
-     * 
-     */
+
     public static void main(String[] args) {
         System.out.println("Hello World");
     }

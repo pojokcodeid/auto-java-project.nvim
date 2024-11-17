@@ -87,13 +87,7 @@ local function create_java_class()
 package %s;
 
 public class %s {
-    /**
-     * 
-     */
-    public %s() {
-        
-    }
-    // Other methods and fields
+    
 }
 ]],
     package_name,

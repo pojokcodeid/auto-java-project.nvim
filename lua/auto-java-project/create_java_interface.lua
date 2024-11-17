@@ -87,7 +87,7 @@ local function create_java_interface()
 package %s;
 
 public interface %s {
-    // Other methods and fields
+    
 }
 ]],
     package_name,
