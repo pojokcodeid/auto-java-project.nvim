@@ -26,4 +26,7 @@ User Command :
 - :MavenNewProject
 - :GradleNewProject
 - :SpringBootNewProject
+- :CreateJavaClass
+- :CreateJavaInterface
+- :CreateJavaMainClass
 ```
