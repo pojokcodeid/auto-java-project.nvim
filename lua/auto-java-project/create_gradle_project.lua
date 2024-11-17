@@ -48,7 +48,12 @@ local function gradle_new_project()
     return
   end
 
-  project_dir = project_dir .. "\\" .. project_name
+  local uname = vim.loop.os_uname().sysname
+    if uname == "Windows_NT" then
+      project_dir = project_dir .. "\\" .. project_name
+    else
+      project_dir = project_dir .. "/" .. project_name
+    end
 
   -- Buat direktori jika belum ada
   if vim.fn.isdirectory(project_dir) == 0 then
