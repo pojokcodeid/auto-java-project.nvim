@@ -91,11 +91,21 @@ local function gradle_new_project()
       create_notif("Error executing: " .. output, "error")
     else
       create_notif("Project created successfully!", "info")
-      local main_class_path = string.format("%s/app/src/main/java/%s/App.java", dir, pkg:gsub("%.", "/"))
-      if vim.fn.filereadable(main_class_path) == 1 then
-        vim.cmd(":edit " .. main_class_path)
+      create_notif("Please Open Dir : " .. dir, "info")
+      -- local main_class_path = string.format("%s/app/src/main/java/%s/App.java", dir, pkg:gsub("%.", "/"))
+      -- if vim.fn.filereadable(main_class_path) == 1 then
+      --   vim.cmd(":edit " .. main_class_path)
+      -- end
+      -- vim.cmd(":NvimTreeFindFileToggle<CR>")
+      -- Function to quit Neovim after a 30-second delay
+      local function delayed_quit()
+        vim.defer_fn(function()
+          vim.cmd("quit")
+        end, 15000)  -- Delay is set in milliseconds (15,000ms = 15 seconds)
       end
-      vim.cmd(":NvimTreeFindFileToggle<CR>")
+
+      -- Run the delayed quit function
+      delayed_quit()
     end
   end
 
