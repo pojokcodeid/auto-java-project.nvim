@@ -101,7 +101,7 @@ local function gradle_new_project()
       local function delayed_quit()
         vim.defer_fn(function()
           vim.cmd("quit")
-        end, 15000)  -- Delay is set in milliseconds (15,000ms = 15 seconds)
+        end, 5000)  -- Delay is set in milliseconds (5,000ms = 5 seconds)
       end
 
       -- Run the delayed quit function
