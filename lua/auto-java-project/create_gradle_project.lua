@@ -22,95 +22,55 @@ local function gradle_new_project()
 
     return result, false
   end
-
-  -- Fungsi untuk memeriksa apakah perintah gradle tersedia
-  local function is_gradle_available()
-    local handle = io.popen("gradle -v")
-    local result = handle:read("*a")
-    handle:close()
-    return result ~= ""
-  end
-
-  -- Validasi apakah gradle tersedia
-  if not is_gradle_available() then
-    create_notif("Gradle is not available. Please install Gradle and try again.", "error")
+  -- Ambil input Testing
+  local test, canceled_test = get_user_input("Testing (junit,junit-jupiter,testng,spock): ", "junit-jupiter")
+  if canceled_test then
     return
   end
-  -- Ambil input dari pengguna untuk menentukan direktori proyek
-  local project_dir, canceled = get_user_input("Enter project directory: ", vim.fn.getcwd())
-  if canceled then
+  -- Ambil input DSL
+  local script_dsl, canceled_dsl = get_user_input("Script DSL (kotlin, groovy): ", "groovy")
+  if canceled_dsl then
     return
   end
-
-  -- Ambil input dari pengguna untuk Gradle
-  local project_name, canceled_name = get_user_input("Enter project name: ", "myjavaproject")
-  if canceled_name then
-    return
-  end
-
-  local uname = vim.loop.os_uname().sysname
-    if uname == "Windows_NT" then
-      project_dir = project_dir .. "\\" .. project_name
-    else
-      project_dir = project_dir .. "/" .. project_name
-    end
-
-  -- Buat direktori jika belum ada
-  if vim.fn.isdirectory(project_dir) == 0 then
-    if vim.fn.mkdir(project_dir, "p") == 0 then
-      create_notif("Failed to create project directory: " .. project_dir, "error")
-      return
-    end
-  end
-  -- Pindah ke direktori proyek
-  local success, err = pcall(vim.fn.chdir, project_dir)
-  if not success then
-    create_notif("Error changing directory: " .. err, "error")
-    return
-  end
-
-  create_notif("Changed directory to: " .. project_dir, "info")
-
   -- Ambil input package name
-  local package_name, canceled_package = get_user_input("Enter package name: ", "com.example." .. project_name)
+  local package_name, canceled_package = get_user_input("Enter package name: ", "com.example")
   if canceled_package then
     return
   end
 
   -- Format perintah Gradle berdasarkan input pengguna
   local command = string.format(
-    "gradle init --type java-application --dsl groovy --project-name %s --package %s",
-    project_name,
+    "echo no | gradle init --type java-application --test-framework %s  --dsl %s --package %s --no-daemon",
+    test,
+    script_dsl,
     package_name
   )
 
   -- Fungsi untuk menjalankan perintah Gradle dan menampilkan outputnya
-  local function run_gradle_command(cmd, dir, pkg)
+  local function run_gradle_command(cmd, path, pkg)
     local output = vim.fn.system(cmd)
     if vim.v.shell_error ~= 0 then
       create_notif("Error executing: " .. output, "error")
     else
       create_notif("Project created successfully!", "info")
-      create_notif("Please Open Dir : " .. dir, "info")
-      -- local main_class_path = string.format("%s/app/src/main/java/%s/App.java", dir, pkg:gsub("%.", "/"))
-      -- if vim.fn.filereadable(main_class_path) == 1 then
-      --   vim.cmd(":edit " .. main_class_path)
-      -- end
-      -- vim.cmd(":NvimTreeFindFileToggle<CR>")
-      -- Function to quit Neovim after a 30-second delay
+      create_notif("Please Reopen Dir : " .. path, "info")
+      vim.cmd(":NvimTreeFindFileToggle<CR>")
+      local main_class_path = string.format("%s/app/src/main/java/%s/App.java", path, pkg:gsub("%.", "/"))
+      if vim.fn.filereadable(main_class_path) == 1 then
+        vim.cmd(":edit " .. main_class_path)
+      end
       local function delayed_quit()
         vim.defer_fn(function()
-          vim.cmd("quit")
-        end, 3000)  -- Delay is set in milliseconds (3,000ms = 3 seconds)
+          vim.cmd("qa!")
+        end, 4000) -- Delay is set in milliseconds (3,000ms = 3 seconds)
       end
-
       -- Run the delayed quit function
       delayed_quit()
     end
   end
 
   -- Jalankan perintah Gradle dan buka proyek
-  run_gradle_command(command, project_dir, package_name)
+  run_gradle_command(command, vim.fn.getcwd(), package_name)
 end
 
 vim.api.nvim_create_user_command("GradleNewProject", gradle_new_project, {})
