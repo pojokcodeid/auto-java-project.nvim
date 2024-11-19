@@ -112,6 +112,7 @@ local function mvn_new_project()
           end
         end
       end
+      create_notif("Wait a moment for jdtls to load correctly", "info")
     end
   end
 

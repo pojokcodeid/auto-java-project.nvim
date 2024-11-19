@@ -53,7 +53,7 @@ local function gradle_new_project()
       create_notif("Error executing: " .. output, "error")
     else
       create_notif("Project created successfully!", "info")
-      create_notif("Please Reopen Dir : " .. path, "info")
+      -- create_notif("Please Reopen Dir : " .. path, "info")
       vim.cmd(":NvimTreeFindFileToggle<CR>")
       local main_class_path = string.format("%s/app/src/main/java/%s/App.java", path, pkg:gsub("%.", "/"))
       if vim.fn.filereadable(main_class_path) == 1 then
@@ -66,6 +66,7 @@ local function gradle_new_project()
       -- end
       -- Run the delayed quit function
       -- delayed_quit()
+      create_notif("Wait a moment for jdtls to load correctly", "info")
     end
   end
 
