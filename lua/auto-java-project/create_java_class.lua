@@ -1,11 +1,11 @@
 local function create_java_class()
-  local is_maven_project = function()
-    if vim.fn.findfile("pom.xml", vim.fn.getcwd()) == "pom.xml" then
-      return true
-    else
-      return false
-    end
-  end
+  -- local is_maven_project = function()
+  --   if vim.fn.findfile("pom.xml", vim.fn.getcwd()) == "pom.xml" then
+  --     return true
+  --   else
+  --     return false
+  --   end
+  -- end
 
   local function create_notif(message, level)
     local notif_ok, notify = pcall(require, "notify")
@@ -59,11 +59,11 @@ local function create_java_class()
   -- Format direktori dan path file berdasarkan input pengguna
   local package_dir = nil
   if package_name then
-    if is_maven_project() then
+    -- if is_maven_project() then
       package_dir = string.format("src/main/java/%s", package_name:gsub("%.", "/"))
-    else
-      package_dir = string.format("app/src/main/java/%s", package_name:gsub("%.", "/"))
-    end
+    -- else
+    --   package_dir = string.format("app/src/main/java/%s", package_name:gsub("%.", "/"))
+    -- end
     if vim.fn.isdirectory(package_dir) == 0 then
       vim.fn.mkdir(package_dir, "p")
     end
