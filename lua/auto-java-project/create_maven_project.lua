@@ -92,6 +92,7 @@ local function mvn_new_project()
       local ch_dir = string.format("cd %s", project_name)
       vim.fn.system(ch_dir)
       vim.fn.chdir(project_name)
+      vim.cmd(":NvimTreeFindFileToggl<CR>")
       -- Cari dan buka file main class
       local uname = vim.loop.os_uname().sysname
       if uname == "Windows_NT" then
@@ -111,7 +112,6 @@ local function mvn_new_project()
           end
         end
       end
-      vim.cmd(":NvimTreeFindFileToggl<CR>")
     end
   end
 
