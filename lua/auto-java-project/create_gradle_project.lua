@@ -59,13 +59,13 @@ local function gradle_new_project()
       if vim.fn.filereadable(main_class_path) == 1 then
         vim.cmd(":edit " .. main_class_path)
       end
-      local function delayed_quit()
-        vim.defer_fn(function()
-          vim.cmd("qa!")
-        end, 4000) -- Delay is set in milliseconds (3,000ms = 3 seconds)
-      end
+      -- local function delayed_quit()
+      --   vim.defer_fn(function()
+      --     vim.cmd("qa!")
+      --   end, 4000) -- Delay is set in milliseconds (3,000ms = 3 seconds)
+      -- end
       -- Run the delayed quit function
-      delayed_quit()
+      -- delayed_quit()
     end
   end
 
